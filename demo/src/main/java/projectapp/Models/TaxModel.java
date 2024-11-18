@@ -10,7 +10,7 @@ public class TaxModel {
         if (baseSalary < 0) {
             throw new IllegalArgumentException("Base salary cannot be negative");
         }
-        if (studentLoanPlan != 0 || studentLoanPlan != 1 || studentLoanPlan != 2 ) {
+        if (studentLoanPlan != 0 && studentLoanPlan != 1 && studentLoanPlan != 2 ) {
             throw new IllegalArgumentException("Please select 0 for no student loan, or 1 / 2 for respective plans");
         }
         if (pensionContribution < 0) {

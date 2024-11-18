@@ -1,4 +1,9 @@
 /Users/as/ProjectApp/demo/src/main/java/projectapp/App.java
 /Users/as/ProjectApp/demo/src/main/java/projectapp/Services/MortgageService.java
 /Users/as/ProjectApp/demo/src/main/java/projectapp/Models/MortgageModel.java
+/Users/as/ProjectApp/demo/src/main/java/projectapp/Models/TaxModel.java
 /Users/as/ProjectApp/demo/src/main/java/projectapp/Controllers/MortgageController.java
+/Users/as/ProjectApp/demo/src/main/java/projectapp/Models/TaxSalaryChildModel.java
+/Users/as/ProjectApp/demo/src/main/java/projectapp/Controllers/TaxController.java
+/Users/as/ProjectApp/demo/src/main/java/projectapp/Models/TaxHourlyChildModel.java
+/Users/as/ProjectApp/demo/src/main/java/projectapp/Services/TaxService.java
