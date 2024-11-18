@@ -14,15 +14,24 @@ public class TaxController {
     @Autowired
     private TaxService taxService;
 
-    @PostMapping("/calculate")
-    public ResponseEntity<TaxModel> recieveMortgageParams(@RequestBody TaxModel taxModel) {
+    @PostMapping("/calculatesalary")
+    public ResponseEntity<TaxModel> calculateSalaryTakeHome(@RequestBody TaxModel taxModel) {
         try {
             return ResponseEntity.ok(taxModel);
         }
         catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(null);
         }
-
+    }
+        @PostMapping("/calculatehourly")
+        public ResponseEntity<TaxModel> calculateHourlyTakeHome(@RequestBody TaxModel taxModel) {
+            try {
+                return ResponseEntity.ok(taxModel);
+            }
+            catch (IllegalArgumentException e) {
+                return ResponseEntity.badRequest().body(null);
+            }
     }
 
 }
+
