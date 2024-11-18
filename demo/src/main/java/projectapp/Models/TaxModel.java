@@ -35,7 +35,7 @@ public class TaxModel {
     }
 
     public void setStudentLoanPlan(int studentLoanPlan) {
-        this.baseSalary = baseSalary;
+        this.studentLoanPlan = studentLoanPlan;
     }
 
     public int getStudentLoanPlan() {
