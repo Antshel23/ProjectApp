@@ -1,39 +1,36 @@
 package projectapp.Controllers;
 
-//import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import projectapp.Models.TaxHourlyChildModel;
 import projectapp.Models.TaxModel;
-//import projectapp.Services.TaxService;
+import projectapp.Services.TaxService;
 import projectapp.Models.TaxSalaryChildModel;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @RestController
 @RequestMapping("/tax")
 public class TaxController {
     
-    //@Autowired
-    //private TaxService taxService;
+@Autowired
+private TaxService taxService;
 
     @PostMapping("/calculatesalary")
-    public ResponseEntity<TaxModel> calculateSalaryTakeHome(@RequestBody TaxSalaryChildModel taxModel) {
+    public ResponseEntity<Map<String, Object>> returnTakeHomeSalaryFromHourly(@RequestBody TaxModel taxModel) {
         try {
-            return ResponseEntity.ok(taxModel);
+            Map<String, Object> response = new HashMap<>();
+            response.put("Yearly: ", taxService.calculateTakeHomeYearlyPay(taxModel));
+            response.put("Monthly: ", taxService.calculateTakeHomeMonthlyPay(taxModel));
+            response.put("Student loan deduction: ", taxService.calculateStudentLoanOwed(taxModel));
+            return ResponseEntity.ok(response);
         }
         catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(null);
         }
-    }
-        @PostMapping("/calculatehourly")
-        public ResponseEntity<TaxModel> calculateHourlyTakeHome(@RequestBody TaxHourlyChildModel taxModel) {
-            try {
-                return ResponseEntity.ok(taxModel);
-            }
-            catch (IllegalArgumentException e) {
-                return ResponseEntity.badRequest().body(null);
-            }
     }
 
 }

@@ -15,7 +15,7 @@ public class MortgageController {
     private MortgageService mortgageService;
 
     @PostMapping("/calculate")
-    public ResponseEntity<MortgageModel> recieveMortgageParams(@RequestBody MortgageModel mortgageModel) {
+    public ResponseEntity<MortgageModel> returnMonthlyRepayment(@RequestBody MortgageModel mortgageModel) {
         try {
         double monthlyRepayment = mortgageService.calculateMonthlyRepayment(mortgageModel);
         mortgageModel.setMonthlyRepayment(monthlyRepayment);

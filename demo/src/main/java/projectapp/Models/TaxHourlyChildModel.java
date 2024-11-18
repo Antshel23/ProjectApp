@@ -12,6 +12,11 @@ protected double averageWeeklyHours;
     this.baseSalary = calculateBaseSalary();
     }
 
+    @Override
+    public double getBaseSalary() {
+        return calculateBaseSalary();
+    }
+
     public double calculateBaseSalary() {
         return hourlyWage * averageWeeklyHours * 52;
     }
