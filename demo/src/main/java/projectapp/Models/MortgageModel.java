@@ -6,6 +6,7 @@ private double interestRate;
 private double termYears;
 private double currentEquity;
 private double propertyValue;
+private double monthlyRepayment;
 
     public MortgageModel(double interestRate, int termYears, double currentEquity, double propertyValue) {
     if (interestRate <= 0) {
@@ -69,5 +70,16 @@ private double propertyValue;
             throw new IllegalArgumentException("Property value must be greater than 0");
         }
         this.propertyValue = propertyValue;
+    }
+
+    public double getMonthlyRepayment() {
+        return monthlyRepayment;
+    }
+
+    public void setMonthlyRepayment(double monthlyRepayment) {
+        if (monthlyRepayment <= 0) {
+            throw new IllegalArgumentException("Property value must be greater than 0");
+        }
+        this.monthlyRepayment = monthlyRepayment;
     }
 }
