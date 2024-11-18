@@ -13,7 +13,7 @@ protected double averageWeeklyHours;
     }
 
     public double calculateBaseSalary() {
-        return hourlyWage * averageWeeklyHours;
+        return hourlyWage * averageWeeklyHours * 52;
     }
 
     public void setHourlyWage(double hourlyWage) {
