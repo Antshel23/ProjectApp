@@ -20,12 +20,26 @@ public class TaxController {
 private TaxService taxService;
 
     @PostMapping("/calculatesalary")
-    public ResponseEntity<Map<String, Object>> returnTakeHomeSalaryFromHourly(@RequestBody TaxModel taxModel) {
+    public ResponseEntity<Map<String, Object>> returnTakeHomeSalary(@RequestBody TaxSalaryChildModel taxModel) {
         try {
             Map<String, Object> response = new HashMap<>();
-            response.put("Yearly: ", taxService.calculateTakeHomeYearlyPay(taxModel));
-            response.put("Monthly: ", taxService.calculateTakeHomeMonthlyPay(taxModel));
-            response.put("Student loan deduction: ", taxService.calculateStudentLoanOwed(taxModel));
+            response.put("Yearly:", taxService.calculateTakeHomeYearlyPay(taxModel));
+            response.put("Monthly:", taxService.calculateTakeHomeMonthlyPay(taxModel));
+            response.put("Student loan deduction:", taxService.calculateStudentLoanOwed(taxModel));
+            return ResponseEntity.ok(response);
+        }
+        catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
+
+    @PostMapping("/calculatesalaryfromhourly")
+    public ResponseEntity<Map<String, Object>> returnTakeHomeSalaryFromHourly(@RequestBody TaxHourlyChildModel taxModel) {
+        try {
+            Map<String, Object> response = new HashMap<>();
+            response.put("Yearly:", taxService.calculateTakeHomeYearlyPay(taxModel));
+            response.put("Monthly:", taxService.calculateTakeHomeMonthlyPay(taxModel));
+            response.put("Student loan deduction:", taxService.calculateStudentLoanOwed(taxModel));
             return ResponseEntity.ok(response);
         }
         catch (IllegalArgumentException e) {
