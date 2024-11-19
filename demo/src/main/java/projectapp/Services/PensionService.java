@@ -16,12 +16,22 @@ public class PensionService {
         return currentPot;
     }
 
-    public double calculateLumpSumAndDrawdown(PensionModel pensionModel) {
-        return 0;
+    public double calculateLumpSum(PensionModel pensionModel) {
+        return calculateRetirementPot(pensionModel) * 0.25;
     }
 
-    public double calculateDrawdownOnly(PensionModel pensionModel) {
-        return 0;
+    public double calculateDrawdown(PensionModel pensionModel) {
+        return calculateRetirementPot(pensionModel) / calculateRetirementLength(pensionModel);
+    }
+
+    public double calculateDrawdownWithLumpSum(PensionModel pensionModel) {
+        double finalPot = calculateRetirementPot(pensionModel);
+        double lumpSum = finalPot * 0.25;
+        return (finalPot -= lumpSum) / calculateRetirementLength(pensionModel);
+    }
+
+    public double calculateRetirementLength(PensionModel pensionModel) {
+        return 85 - pensionModel.getRetirementAge();
     }
 
     public double calculateYearlyContribution(PensionModel pensionModel) {

@@ -27,28 +27,36 @@ public class PensionController {
         catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(null);
         }
-
     }
 
     @PostMapping("/calculate/lumpsum&drawdown")
-    public ResponseEntity<PensionModel> returnY(@RequestBody PensionModel pensionModel) {
+    public ResponseEntity<Map<String, Object>> returnLumpSumAndDrawdown(@RequestBody PensionModel pensionModel) {
         try {
-        return ResponseEntity.ok(pensionModel);
+            DecimalFormat df = new DecimalFormat("#.##");
+            Map<String, Object> response = new HashMap<>();
+            response.put("Total Pot", Double.valueOf(df.format(pensionService.calculateRetirementPot(pensionModel))));
+            response.put("Lump Sum", Double.valueOf(df.format(pensionService.calculateLumpSum(pensionModel))));
+            response.put("Drawdown", Double.valueOf(df.format(pensionService.calculateDrawdownWithLumpSum(pensionModel))));
+            response.put("Retirement length (years)", Double.valueOf(df.format(pensionService.calculateRetirementLength(pensionModel))));
+        return ResponseEntity.ok(response);
         }
         catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(null);
         }
-
     }
 
     @PostMapping("/calculate/drawdown")
-    public ResponseEntity<PensionModel> returnZ(@RequestBody PensionModel pensionModel) {
+    public ResponseEntity<Map<String, Object>> returnDrawdown(@RequestBody PensionModel pensionModel) {
         try {
-        return ResponseEntity.ok(pensionModel);
+            DecimalFormat df = new DecimalFormat("#.##");
+            Map<String, Object> response = new HashMap<>();
+            response.put("Total Pot", Double.valueOf(df.format(pensionService.calculateRetirementPot(pensionModel))));
+            response.put("Drawdown", Double.valueOf(df.format(pensionService.calculateDrawdown(pensionModel))));
+            response.put("Retirement length (years)", Double.valueOf(df.format(pensionService.calculateRetirementLength(pensionModel))));
+        return ResponseEntity.ok(response);
         }
         catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(null);
         }
-
     }
 }
