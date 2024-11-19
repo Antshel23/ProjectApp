@@ -1,5 +1,83 @@
 package projectapp.Models;
 
 public class PensionModel {
-    
+private double totalAnnualIncome;
+private double personalContribution;
+private double employerContribution;
+private double currentPot;
+private int age;
+private int retirementAge;
+
+public PensionModel(double totalAnnualIncome, double personalContribution, double employerContribution, double currentPot, int age, int retirementAge) {
+    if (totalAnnualIncome <= 0) {
+        throw new IllegalArgumentException("Annual income must be greater than 0");
+    }
+    if (personalContribution + employerContribution <= 0) {
+        throw new IllegalArgumentException("Combined contributions must be greater than 0");
+    }
+    if (currentPot < 0) {
+        throw new IllegalArgumentException("Current pot cannot be negative");
+    }
+    if (age < 17) {
+        throw new IllegalArgumentException("You must be 18 or older");
+    }
+    if (retirementAge < 17) {
+        throw new IllegalArgumentException("Retirement has to be 18 or older");
+    }
+
+    this.totalAnnualIncome = totalAnnualIncome;
+    this.personalContribution = personalContribution;
+    this.employerContribution = employerContribution;
+    this.currentPot = currentPot;
+    this.age = age;
+    this.retirementAge = retirementAge;
+}
+
+public double getTotalAnnualIncome() {
+    return totalAnnualIncome;
+}
+
+public void setTotalAnnualIncome(double totalAnnualIncome) {
+    this.totalAnnualIncome = totalAnnualIncome;
+}
+
+public double getPersonalContribution() {
+    return personalContribution;
+}
+
+public void setPersonalContribution(double personalContribution) {
+    this.personalContribution = personalContribution;
+}
+
+public double getEmployerContribution() {
+    return employerContribution;
+}
+
+public void setEmployerContribution(double employerContribution) {
+    this.employerContribution = employerContribution;
+}
+
+public double getCurrentPot() {
+    return currentPot;
+}
+
+public void setCurrentPot(double currentPot) {
+    this.currentPot = currentPot;
+}
+
+public int getAge() {
+    return age;
+}
+
+public void setAge(int age) {
+    this.age = age;
+}
+
+public int getRetirementAge() {
+    return retirementAge;
+}
+
+public void setRetirementAge(int retirementAge) {
+    this.retirementAge = retirementAge;
+}
 }
