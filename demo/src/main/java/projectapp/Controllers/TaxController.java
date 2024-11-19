@@ -10,6 +10,8 @@ import projectapp.Services.TaxService;
 import projectapp.Models.TaxSalaryChildModel;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.LinkedHashMap;
+import java.text.DecimalFormat;
 
 
 @RestController
@@ -19,17 +21,18 @@ public class TaxController {
 @Autowired
 private TaxService taxService;
 
-    @PostMapping("/calculatesalary")
+    @PostMapping("/calculate/takehome/salary")
     public ResponseEntity<Map<String, Object>> returnTakeHomeSalary(@RequestBody TaxSalaryChildModel taxModel) {
         try {
-            Map<String, Object> response = new HashMap<>();
-            response.put("Take home (yearly):", taxService.calculateTakeHomeYearlyPay(taxModel));
-            response.put("Total income::", taxService.calculateTotalIncome(taxModel));
-            response.put("Total deductions:", taxService.calculateTotalDeductions(taxModel));
-            response.put("Student Loan deduction:", taxService.calculateStudentLoanOwed(taxModel));
-            response.put("Pension deduction:", taxService.calculatePensionContribution(taxModel));
-            response.put("National Insurance deduction:", taxService.calculateNationalInsuranceOwed(taxModel));
-            response.put("Income tax deduction:", taxService.calculateTaxOwed(taxModel));
+            DecimalFormat df = new DecimalFormat("#.##");
+            Map<String, Object> response = new LinkedHashMap<>();
+            response.put("Take home (yearly)", Double.valueOf(df.format(taxService.calculateTakeHomeYearlyPay(taxModel))));
+            response.put("Total income", Double.valueOf(df.format(taxService.calculateTotalIncome(taxModel))));
+            response.put("Total deductions", Double.valueOf(df.format(taxService.calculateTotalDeductions(taxModel))));
+            response.put("Student Loan deduction", Double.valueOf(df.format(taxService.calculateStudentLoanOwed(taxModel))));
+            response.put("Pension deduction", Double.valueOf(df.format(taxService.calculatePensionContribution(taxModel))));
+            response.put("National Insurance deduction", Double.valueOf(df.format(taxService.calculateNationalInsuranceOwed(taxModel))));
+            response.put("Income tax deduction", Double.valueOf(df.format(taxService.calculateTaxOwed(taxModel))));
             return ResponseEntity.ok(response);
         }
         catch (IllegalArgumentException e) {
@@ -37,17 +40,18 @@ private TaxService taxService;
         }
     }
 
-    @PostMapping("/calculatesalaryfromhourly")
+    @PostMapping("/calculate/takehome/hourly")
     public ResponseEntity<Map<String, Object>> returnTakeHomeSalaryFromHourly(@RequestBody TaxHourlyChildModel taxModel) {
         try {
-            Map<String, Object> response = new HashMap<>();
-            response.put("Take home (yearly):", taxService.calculateTakeHomeYearlyPay(taxModel));
-            response.put("Total income:", taxService.calculateTotalIncome(taxModel));
-            response.put("Total deductions:", taxService.calculateTotalDeductions(taxModel));
-            response.put("Student Loan deduction:", taxService.calculateStudentLoanOwed(taxModel));
-            response.put("Pension deduction:", taxService.calculatePensionContribution(taxModel));
-            response.put("National Insurance deduction:", taxService.calculateNationalInsuranceOwed(taxModel));
-            response.put("Income tax deduction:", taxService.calculateTaxOwed(taxModel));
+            DecimalFormat df = new DecimalFormat("#.##");
+            Map<String, Object> response = new LinkedHashMap<>();
+            response.put("Take home (yearly)", Double.valueOf(df.format(taxService.calculateTakeHomeYearlyPay(taxModel))));
+            response.put("Total income", Double.valueOf(df.format(taxService.calculateTotalIncome(taxModel))));
+            response.put("Total deductions", Double.valueOf(df.format(taxService.calculateTotalDeductions(taxModel))));
+            response.put("Student Loan deduction", Double.valueOf(df.format(taxService.calculateStudentLoanOwed(taxModel))));
+            response.put("Pension deduction", Double.valueOf(df.format(taxService.calculatePensionContribution(taxModel))));
+            response.put("National Insurance deduction", Double.valueOf(df.format(taxService.calculateNationalInsuranceOwed(taxModel))));
+            response.put("Income tax deduction", Double.valueOf(df.format(taxService.calculateTaxOwed(taxModel))));
             return ResponseEntity.ok(response);
         }
         catch (IllegalArgumentException e) {
