@@ -5,10 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import projectapp.Models.TaxHourlyChildModel;
-import projectapp.Models.TaxModel;
 import projectapp.Services.TaxService;
 import projectapp.Models.TaxSalaryChildModel;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.LinkedHashMap;
 import java.text.DecimalFormat;
