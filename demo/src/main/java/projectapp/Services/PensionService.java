@@ -17,5 +17,13 @@ public class PensionService {
         return 0;
     }
 
+    public double calculateYearlyContribution(PensionModel pensionModel) {
+        double totalContribution =  pensionModel.getEmployerContribution() + pensionModel.getPersonalContribution();
+        return pensionModel.getTotalAnnualIncome() * totalContribution;
+    }
 
+    public double calculateYearsToRetirement(PensionModel pensionModel) {
+        return pensionModel.getRetirementAge() - pensionModel.getAge();
+    }
 }
+

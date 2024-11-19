@@ -12,7 +12,7 @@ public PensionModel(double totalAnnualIncome, double personalContribution, doubl
     if (totalAnnualIncome <= 0) {
         throw new IllegalArgumentException("Annual income must be greater than 0");
     }
-    if (personalContribution + employerContribution <= 0) {
+    if (personalContribution + employerContribution <= 0 && personalContribution < 100) {
         throw new IllegalArgumentException("Combined contributions must be greater than 0");
     }
     if (currentPot < 0) {
@@ -21,13 +21,13 @@ public PensionModel(double totalAnnualIncome, double personalContribution, doubl
     if (age < 17) {
         throw new IllegalArgumentException("You must be 18 or older");
     }
-    if (retirementAge < 17) {
-        throw new IllegalArgumentException("Retirement has to be 18 or older");
+    if (retirementAge <= age) {
+        throw new IllegalArgumentException("Retirement must be in the future");
     }
 
     this.totalAnnualIncome = totalAnnualIncome;
-    this.personalContribution = personalContribution;
-    this.employerContribution = employerContribution;
+    this.personalContribution = personalContribution / 100;
+    this.employerContribution = employerContribution / 100;
     this.currentPot = currentPot;
     this.age = age;
     this.retirementAge = retirementAge;
