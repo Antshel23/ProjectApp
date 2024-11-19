@@ -30,7 +30,7 @@ public class PensionService {
         return (finalPot -= lumpSum) / calculateRetirementLength(pensionModel);
     }
 
-    public double calculateRetirementLength(PensionModel pensionModel) {
+    public int calculateRetirementLength(PensionModel pensionModel) {
         return 85 - pensionModel.getRetirementAge();
     }
 

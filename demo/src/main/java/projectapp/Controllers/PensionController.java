@@ -37,7 +37,7 @@ public class PensionController {
             response.put("Total Pot", Double.valueOf(df.format(pensionService.calculateRetirementPot(pensionModel))));
             response.put("Lump Sum", Double.valueOf(df.format(pensionService.calculateLumpSum(pensionModel))));
             response.put("Drawdown", Double.valueOf(df.format(pensionService.calculateDrawdownWithLumpSum(pensionModel))));
-            response.put("Retirement length (years)", Double.valueOf(df.format(pensionService.calculateRetirementLength(pensionModel))));
+            response.put("Retirement length (years)", Integer.valueOf(df.format(pensionService.calculateRetirementLength(pensionModel))));
         return ResponseEntity.ok(response);
         }
         catch (IllegalArgumentException e) {
@@ -52,7 +52,7 @@ public class PensionController {
             Map<String, Object> response = new HashMap<>();
             response.put("Total Pot", Double.valueOf(df.format(pensionService.calculateRetirementPot(pensionModel))));
             response.put("Drawdown", Double.valueOf(df.format(pensionService.calculateDrawdown(pensionModel))));
-            response.put("Retirement length (years)", Double.valueOf(df.format(pensionService.calculateRetirementLength(pensionModel))));
+            response.put("Retirement length (years)", Integer.valueOf(df.format(pensionService.calculateRetirementLength(pensionModel))));
         return ResponseEntity.ok(response);
         }
         catch (IllegalArgumentException e) {
