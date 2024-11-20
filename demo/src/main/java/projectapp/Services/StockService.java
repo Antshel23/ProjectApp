@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 public class StockService {
     private final RestTemplate restTemplate = new RestTemplate();
-    private final String apiKey = "";
+    private final String apiKey = System.getenv("API_KEY");
     private final String API_URL = "https://www.alphavantage.co/query?function=TOP_GAINERS_LOSERS&apikey=" + apiKey;
 
     public List<StockModel> getStockByCategory(String category) {
