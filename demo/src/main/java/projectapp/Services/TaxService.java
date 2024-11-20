@@ -5,7 +5,7 @@ import projectapp.Models.TaxModel;
 
 @Service
 public class TaxService {
-    
+
     public double calculateTakeHomeYearlyPay(TaxModel taxModel) {
     return calculateTotalIncome(taxModel) - calculateTotalDeductions(taxModel);
     }
