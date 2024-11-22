@@ -21,7 +21,7 @@ public class PensionController {
         try {
             DecimalFormat df = new DecimalFormat("#.##");
             Map<String, Object> response = new HashMap<>();
-            response.put("Total Pot", Double.valueOf(df.format(pensionService.calculateRetirementPot(pensionModel))));
+            response.put("totalPot", Double.valueOf(df.format(pensionService.calculateRetirementPot(pensionModel))));
         return ResponseEntity.ok(response);
         }
         catch (IllegalArgumentException e) {
