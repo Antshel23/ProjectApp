@@ -61,24 +61,35 @@ public class TaxService {
     public double calculateTaxOwed(TaxModel taxModel) {
         double taxableIncome = calculateTaxableIncome(taxModel);
         double personalAllowance = 12570;
-        if (taxableIncome < personalAllowance) {
-            return taxableIncome;
+    
+        if (taxableIncome > 100000) {
+            personalAllowance -= (taxableIncome - 100000) / 2;
+            if (personalAllowance < 0) {
+                personalAllowance = 0;
+            }
         }
-        else if (taxableIncome < 50270) {
-            return (taxableIncome - personalAllowance) * 0.2;
+    
+        double basicRateLimit = 50270;
+        double higherRateLimit = 125140;
+        double tax = 0;
+    
+        if (taxableIncome <= personalAllowance) {
+            return 0;
         }
-        else if (taxableIncome < 125140) {
-            double threshold1 = (50270 - personalAllowance) * 0.2;
-            double threshold2 = (taxableIncome - threshold1) * 0.4;
-            return threshold1 + threshold2;
+    
+        if (taxableIncome <= basicRateLimit) {
+            tax += (taxableIncome - personalAllowance) * 0.2;
+        } else if (taxableIncome <= higherRateLimit) {
+            tax += (basicRateLimit - personalAllowance) * 0.2;
+            tax += (taxableIncome - basicRateLimit) * 0.4;
+        } else {
+            tax += (basicRateLimit - personalAllowance) * 0.2;
+            tax += (higherRateLimit - basicRateLimit) * 0.4;
+            tax += (taxableIncome - higherRateLimit) * 0.45;
         }
-        else {
-            double threshold1 = 50270 * 0.2;
-            double threshold2 = 74970 * 0.4;
-            double threshold3 = (taxableIncome - 125140) * 0.45;
-            return threshold1 + threshold2 + threshold3;
-        }
-    }
+    
+        return tax;
+    }    
 
     public double calculateNationalInsuranceOwed(TaxModel taxModel) {
         double weeklyIncome = taxModel.getBaseSalary() / 52;

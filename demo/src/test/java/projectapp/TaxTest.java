@@ -5,9 +5,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.hamcrest.Matchers.closeTo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.web.servlet.MockMvc;
-import projectapp.Controllers.TaxController;
 import projectapp.Models.TaxSalaryChildModel;
 import projectapp.Models.TaxHourlyChildModel;
 import projectapp.Models.TaxModel;
@@ -15,7 +13,6 @@ import projectapp.Services.TaxService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-@WebMvcTest(TaxController.class) // This will start only the TaxController for testing
 class TaxControllerTest {
 
     @Autowired
@@ -25,8 +22,7 @@ class TaxControllerTest {
     private ObjectMapper objectMapper;
 
     @MockBean
-    private TaxService taxService; // Inject the TaxService to calculate expected values
-
+    private TaxService taxService;
     @Test
     void shouldReturnCorrectValuesForSalaryModel() throws Exception {
 
