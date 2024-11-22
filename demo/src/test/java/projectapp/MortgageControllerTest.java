@@ -42,13 +42,11 @@ void shouldReturnMonthlyRepayment() throws Exception {
     MortgageModel model = new MortgageModel(4.4, 2, 35000, 220000);
     double expectedRepayment = mortgageService.calculateMonthlyRepayment(model);
 
-    MvcResult result = mockMvc.perform(post("/mortgage/calculate")
+   mockMvc.perform(post("/mortgage/calculate")
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(requestMap)))
             .andExpect(status().isOk())
-            .andExpect(jsonPath("$.monthlyRepayment").value(expectedRepayment))
-            .andReturn();
-
+            .andExpect(jsonPath("$.monthlyRepayment").value(expectedRepayment));
 }
 
 @Test
