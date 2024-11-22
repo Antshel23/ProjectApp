@@ -5,8 +5,8 @@ public class TaxHourlyChildModel extends TaxModel {
 protected double hourlyWage;
 protected double averageWeeklyHours;
 
-    public TaxHourlyChildModel(double hourlyWage, double averageWeeklyHours, double baseSalary, int studentLoanPlan, double pensionContribution, double bonusIncome) {
-    super(0, studentLoanPlan, pensionContribution, bonusIncome);
+    public TaxHourlyChildModel(double hourlyWage, double averageWeeklyHours, int studentLoanPlan, double pensionContribution, double bonusIncome) {
+    super(hourlyWage*averageWeeklyHours*52, studentLoanPlan, pensionContribution, bonusIncome);
     this.hourlyWage = hourlyWage;
     this.averageWeeklyHours = averageWeeklyHours;
     this.baseSalary = calculateBaseSalary();
@@ -14,7 +14,12 @@ protected double averageWeeklyHours;
 
     @Override
     public double getBaseSalary() {
-        return calculateBaseSalary();
+        return hourlyWage * averageWeeklyHours * 52;
+    }
+
+    @Override
+    public void setBaseSalary(double baseSalary) {
+        this.baseSalary = baseSalary;
     }
 
     public double calculateBaseSalary() {
