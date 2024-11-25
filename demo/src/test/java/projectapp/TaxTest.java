@@ -11,8 +11,14 @@ import projectapp.Models.TaxHourlyChildModel;
 import projectapp.Models.TaxModel;
 import projectapp.Services.TaxService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+
+@SpringBootTest
+@AutoConfigureMockMvc
 class TaxControllerTest {
 
     @Autowired
