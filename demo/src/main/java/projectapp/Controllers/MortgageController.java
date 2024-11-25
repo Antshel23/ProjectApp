@@ -25,7 +25,5 @@ public class MortgageController {
         catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(null);
         }
-
     }
-
 }

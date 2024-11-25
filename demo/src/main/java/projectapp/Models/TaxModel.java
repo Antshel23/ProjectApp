@@ -16,6 +16,9 @@ public class TaxModel {
         if (pensionContribution < 0) {
             throw new IllegalArgumentException("Pension contribution cannot be negative");
         }
+        if (pensionContribution > 100) {
+            throw new IllegalArgumentException("Pension contribution cannot be above 100%");
+        }
         if (pensionContribution > (baseSalary + bonusIncome)) {
             throw new IllegalArgumentException("Pension contribution cannot be greater than income");
         }

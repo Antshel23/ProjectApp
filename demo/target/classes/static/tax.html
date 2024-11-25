@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tax Calculation</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <h1>Tax Calculation</h1>
+
+    <!-- Form for salary-based tax calculation -->
+    <form id="salaryForm">
+        <h2>Salary-based Tax Calculation</h2>
+        <label for="baseSalary">Base Salary:</label>
+        <input type="number" id="baseSalary" name="baseSalary" required>
+
+        <label for="studentLoanPlan">Student Loan Plan (1 or 2):</label>
+        <input type="number" id="studentLoanPlan" name="studentLoanPlan" required>
+
+        <label for="pensionContribution">Pension Contribution:</label>
+        <input type="number" id="pensionContribution" name="pensionContribution" required>
+
+        <label for="bonusIncome">Bonus Income:</label>
+        <input type="number" id="bonusIncome" name="bonusIncome" required>
+
+        <button type="button" onclick="calculateSalaryTax()">Calculate Take-home Salary</button>
+    </form>
+
+    <!-- Form for hourly-based tax calculation -->
+    <form id="hourlyForm">
+        <h2>Hourly-based Tax Calculation</h2>
+        <label for="hourlyWage">Hourly Wage:</label>
+        <input type="number" id="hourlyWage" name="hourlyWage" required>
+
+        <label for="averageWeeklyHours">Average Weekly Hours:</label>
+        <input type="number" id="averageWeeklyHours" name="averageWeeklyHours" required>
+
+        <label for="studentLoanPlanHourly">Student Loan Plan (1 or 2):</label>
+        <input type="number" id="studentLoanPlanHourly" name="studentLoanPlanHourly" required>
+
+        <label for="pensionContributionHourly">Pension Contribution:</label>
+        <input type="number" id="pensionContributionHourly" name="pensionContributionHourly" required>
+
+        <label for="bonusIncomeHourly">Bonus Income:</label>
+        <input type="number" id="bonusIncomeHourly" name="bonusIncomeHourly" required>
+
+        <button type="button" onclick="calculateHourlyTax()">Calculate Take-home Salary</button>
+    </form>
+
+    <!-- Display results section -->
+    <div id="result">
+        <h2>Results</h2>
+        <p id="takeHomeSalaryYearly"></p>
+        <p id="takeHomeSalaryMonthly"></p>
+        <p id="totalIncome"></p>
+        <p id="totalDeductions"></p>
+        <p id="studentLoan"></p>
+        <p id="pensionDeduction"></p>
+        <p id="niDeduction"></p>
+        <p id="incomeTaxDeduction"></p>
+    </div>
+
+    <script>
+        function calculateSalaryTax() {
+            const baseSalary = parseFloat(document.getElementById("baseSalary").value);
+            const studentLoanPlan = parseInt(document.getElementById("studentLoanPlan").value);
+            const pensionContribution = parseFloat(document.getElementById("pensionContribution").value);
+            const bonusIncome = parseFloat(document.getElementById("bonusIncome").value);
+
+            const taxData = {
+                baseSalary: baseSalary,
+                studentLoanPlan: studentLoanPlan,
+                pensionContribution: pensionContribution,
+                bonusIncome: bonusIncome
+            };
+
+            fetch("/tax/calculate/takehome/salary", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(taxData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("totalIncome").innerText = "Total income: £" + data["Total income"];
+                document.getElementById("totalDeductions").innerText = "Total deductions: £" + data["Total deductions"];
+                document.getElementById("takeHomeSalaryYearly").innerText = "Take home (yearly): £" + data["Take home (yearly)"];
+                document.getElementById("takeHomeSalaryMonthly").innerText = "Take home (monthly): £" + data["Take home (monthly)"];
+                document.getElementById("niDeduction").innerText = "National Insurance: £" + data["National Insurance deduction"];
+                document.getElementById("incomeTaxDeduction").innerText = "Income tax: £" + data["Income tax deduction"];
+                document.getElementById("studentLoan").innerText = "Student Loan: £" + data["Student Loan deduction"];
+                document.getElementById("pensionDeduction").innerText = "Pension: £" + data["Pension deduction"];
+
+            })
+            .catch(error => console.log('Error:', error));
+        }
+
+        function calculateHourlyTax() {
+            const hourlyWage = parseFloat(document.getElementById("hourlyWage").value);
+            const averageWeeklyHours = parseFloat(document.getElementById("averageWeeklyHours").value);
+            const studentLoanPlanHourly = parseInt(document.getElementById("studentLoanPlanHourly").value);
+            const pensionContributionHourly = parseFloat(document.getElementById("pensionContributionHourly").value);
+            const bonusIncomeHourly = parseFloat(document.getElementById("bonusIncomeHourly").value);
+
+            const hourlyTaxData = {
+                hourlyWage: hourlyWage,
+                averageWeeklyHours: averageWeeklyHours,
+                studentLoanPlan: studentLoanPlanHourly,
+                pensionContribution: pensionContributionHourly,
+                bonusIncome: bonusIncomeHourly
+            };
+
+            fetch("/tax/calculate/takehome/hourly", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(hourlyTaxData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("totalIncome").innerText = "Total income: £" + data["Total income"];
+                document.getElementById("totalDeductions").innerText = "Total deductions: £" + data["Total deductions"];
+                document.getElementById("takeHomeSalaryYearly").innerText = "Take home (yearly): £" + data["Take home (yearly)"];
+                document.getElementById("takeHomeSalaryMonthly").innerText = "Take home (monthly): £" + data["Take home (monthly)"];
+                document.getElementById("niDeduction").innerText = "National Insurance: £" + data["National Insurance deduction"];
+                document.getElementById("incomeTaxDeduction").innerText = "Income tax: £" + data["Income tax deduction"];
+                document.getElementById("studentLoan").innerText = "Student Loan: £" + data["Student Loan deduction"];
+                document.getElementById("pensionDeduction").innerText = "Pension: £" + data["Pension deduction"];
+            })
+            .catch(error => console.log('Error:', error));
+        }
+    </script>
+</body>
+</html>
+

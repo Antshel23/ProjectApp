@@ -40,7 +40,7 @@ public class TaxService {
     }
 
     public double calculatePensionContribution(TaxModel taxModel) {
-        return taxModel.getPensionContribution();
+        return (taxModel.getPensionContribution() / 100) * calculateTotalIncome(taxModel);
     }
 
     public double calculateTotalIncome(TaxModel taxModel) {

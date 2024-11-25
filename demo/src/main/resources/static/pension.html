@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pension Calculator</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <h1>Pension Calculator</h1>
+    <form id="pensionForm">
+        <label for="totalAnnualIncome">Total Annual Income:</label>
+        <input type="number" id="totalAnnualIncome" name="totalAnnualIncome" required><br><br>
+
+        <label for="personalContribution">Personal Contribution:</label>
+        <input type="number" id="personalContribution" name="personalContribution" required><br><br>
+
+        <label for="employerContribution">Employer Contribution:</label>
+        <input type="number" id="employerContribution" name="employerContribution" required><br><br>
+
+        <label for="currentPot">Current Pot:</label>
+        <input type="number" id="currentPot" name="currentPot" required><br><br>
+
+        <label for="age">Current Age:</label>
+        <input type="number" id="age" name="age" required><br><br>
+
+        <label for="retirementAge">Retirement Age:</label>
+        <input type="number" id="retirementAge" name="retirementAge" required><br><br>
+
+        <button type="submit">Calculate Pot</button>
+    </form>
+
+    <div id="result">
+        <h2>Results</h2>
+        <p>Total Pot: <span id="totalPot">0</span></p>
+        <button id="drawdownButton">Calculate Drawdown</button>
+        <button id="lumpsumDrawdownButton">Calculate Lump Sum & Drawdown</button>
+        <p id="drawdownResult"></p>
+        <p id="lumpsumResult"></p>
+    </div>
+
+    <script>
+        document.getElementById('pensionForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const totalAnnualIncome = document.getElementById('totalAnnualIncome').value;
+            const personalContribution = document.getElementById('personalContribution').value;
+            const employerContribution = document.getElementById('employerContribution').value;
+            const currentPot = document.getElementById('currentPot').value;
+            const age = document.getElementById('age').value;
+            const retirementAge = document.getElementById('retirementAge').value;
+
+            const pensionModel = {
+                totalAnnualIncome: parseFloat(totalAnnualIncome),
+                personalContribution: parseFloat(personalContribution),
+                employerContribution: parseFloat(employerContribution),
+                currentPot: parseFloat(currentPot),
+                age: parseInt(age),
+                retirementAge: parseInt(retirementAge)
+            };
+
+            // Calculate Pot
+            fetch('http://localhost:8080/pension/calculate/pot', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(pensionModel)
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('totalPot').innerText = data.totalPot;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+
+        // Drawdown Calculation
+        document.getElementById('drawdownButton').addEventListener('click', function() {
+            const totalAnnualIncome = document.getElementById('totalAnnualIncome').value;
+            const personalContribution = document.getElementById('personalContribution').value;
+            const employerContribution = document.getElementById('employerContribution').value;
+            const currentPot = document.getElementById('currentPot').value;
+            const age = document.getElementById('age').value;
+            const retirementAge = document.getElementById('retirementAge').value;
+
+            const pensionModel = {
+                totalAnnualIncome: parseFloat(totalAnnualIncome),
+                personalContribution: parseFloat(personalContribution),
+                employerContribution: parseFloat(employerContribution),
+                currentPot: parseFloat(currentPot),
+                age: parseInt(age),
+                retirementAge: parseInt(retirementAge)
+            };
+
+            fetch('http://localhost:8080/pension/calculate/drawdown', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(pensionModel)
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('drawdownResult').innerText = `Drawdown: £${data.Drawdown} per year`;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+
+        // Lump Sum & Drawdown Calculation
+        document.getElementById('lumpsumDrawdownButton').addEventListener('click', function() {
+            const totalAnnualIncome = document.getElementById('totalAnnualIncome').value;
+            const personalContribution = document.getElementById('personalContribution').value;
+            const employerContribution = document.getElementById('employerContribution').value;
+            const currentPot = document.getElementById('currentPot').value;
+            const age = document.getElementById('age').value;
+            const retirementAge = document.getElementById('retirementAge').value;
+
+            const pensionModel = {
+                totalAnnualIncome: parseFloat(totalAnnualIncome),
+                personalContribution: parseFloat(personalContribution),
+                employerContribution: parseFloat(employerContribution),
+                currentPot: parseFloat(currentPot),
+                age: parseInt(age),
+                retirementAge: parseInt(retirementAge)
+            };
+
+            fetch('http://localhost:8080/pension/calculate/lumpsum&drawdown', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(pensionModel)
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('lumpsumResult').innerText = `Lump Sum: £${data["Lump Sum"]}, Drawdown: £${data["Drawdown"]} per year`;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>
