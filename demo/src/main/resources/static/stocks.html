@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Information</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <h1>Stock Information</h1>
+    
+    <div>
+        <button onclick="fetchStockData('gainers')">Get Top Gainers</button>
+        <button onclick="fetchStockData('losers')">Get Top Losers</button>
+        <button onclick="fetchStockData('active')">Get Most Actively Traded</button>
+    </div>
+    
+    <table id="stockTable" border="1" style="margin-top: 20px; display: none;">
+        <thead>
+            <tr>
+                <th>Ticker</th>
+                <th>Volume</th>
+                <th>Change Percentage</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <script>
+        function fetchStockData(type) {
+            const endpointMap = {
+                gainers: "/stocks/gainers",
+                losers: "/stocks/losers",
+                active: "/stocks/active"
+            };
+
+            const url = endpointMap[type];
+            if (!url) {
+                console.error("Invalid stock type:", type);
+                return;
+            }
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    const table = document.getElementById("stockTable");
+                    const tbody = table.querySelector("tbody");
+
+                    tbody.innerHTML = ""; // Clear previous results
+
+                    data.forEach(stock => {
+                        const row = document.createElement("tr");
+                        row.innerHTML = `
+                            <td>${stock.ticker}</td>
+                            <td>${stock.volume}</td>
+                            <td>${stock.changePercentage}</td>
+                        `;
+                        tbody.appendChild(row);
+                    });
+
+                    table.style.display = "table"; // Show the table
+                })
+                .catch(error => console.error("Error fetching stock data:", error));
+        }
+    </script>
+</body>
+</html>
+
