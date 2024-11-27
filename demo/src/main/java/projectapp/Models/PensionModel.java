@@ -15,6 +15,12 @@ public PensionModel(double totalAnnualIncome, double personalContribution, doubl
     if (personalContribution + employerContribution <= 0 && personalContribution < 100) {
         throw new IllegalArgumentException("Combined contributions must be greater than 0");
     }
+    if (personalContribution < 0) {
+        throw new IllegalArgumentException("Personal contribution cannot be negative");
+    }
+    if (employerContribution < 0) {
+        throw new IllegalArgumentException("Employer contribution cannot be negative");
+    }
     if (currentPot < 0) {
         throw new IllegalArgumentException("Current pot cannot be negative");
     }
