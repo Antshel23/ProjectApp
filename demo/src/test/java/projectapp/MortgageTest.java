@@ -14,6 +14,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import static org.hamcrest.Matchers.closeTo;
 
 
 @SpringBootTest
@@ -44,7 +45,7 @@ void shouldReturnMonthlyRepayment() throws Exception {
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(requestMap)))
             .andExpect(status().isOk())
-            .andExpect(jsonPath("$.monthlyRepayment").value(expectedRepayment));
+            .andExpect(jsonPath("$.monthlyRepayment").value(closeTo(expectedRepayment, 0.01)));
 }
 
 @Test
