@@ -32,7 +32,7 @@ class TaxControllerTest {
     @Test
     void shouldReturnCorrectValuesForSalaryModel() throws Exception {
 
-        TaxModel taxModel = new TaxSalaryChildModel(50000, 1, 5000, 2000);
+        TaxModel taxModel = new TaxSalaryChildModel(50000, 1, 4, 2000);
         String requestBody = objectMapper.writeValueAsString(taxModel);
 
         double expectedTakeHomeYearly = taxService.calculateTakeHomeYearlyPay(taxModel);
@@ -59,7 +59,7 @@ class TaxControllerTest {
     @Test
     void shouldReturnCorrectValuesForHourlyModel() throws Exception {
 
-        TaxModel taxModel = new TaxHourlyChildModel(15,37, 1, 4000, 2000);
+        TaxModel taxModel = new TaxHourlyChildModel(15,37, 1, 4, 2000);
         taxModel.getBaseSalary();
         String requestBody = objectMapper.writeValueAsString(taxModel);
 
